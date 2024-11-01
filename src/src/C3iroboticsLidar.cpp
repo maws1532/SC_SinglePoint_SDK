@@ -40,7 +40,7 @@ Others:       None
 ***********************************************************************************/
 C3iroboticsLidar::C3iroboticsLidar()
 {
-    SDKVersion = "V1.0"; 
+    SDKVersion = "V1.1"; 
     m_device_connect = NULL;
     m_data_with_signal = true;
     m_receive_lidar_speed = false;
@@ -394,11 +394,12 @@ void C3iroboticsLidar::toothScan2LidarScan(TToothScan &tooth_scan, TLidarScan &l
     size_t size = tooth_scan.getSize();
     lidar_scan.signal.resize(size);
     lidar_scan.distance.resize(size);
+    lidar_scan.CurTime.resize(size);
     for(size_t i = 0; i < size; i++)
     {
-       
         lidar_scan.distance[i] = tooth_scan.distance[i];
         lidar_scan.signal[i] = tooth_scan.signal[i];
+        lidar_scan.CurTime[i] = tooth_scan.CurTime[i];
     }
 }
 

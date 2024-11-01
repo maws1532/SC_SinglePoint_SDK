@@ -29,7 +29,7 @@ namespace dtfeverest
 	{
 	    struct TToothScan
 	    {
-            TToothScan() : offset_valid(false), Shield_count(0), RangInvalidCount(0), offset_angle(0.0), lidar_speed(-1.0), angle(0.0), angleEnd(0.0), distance(), signal(){ }
+            TToothScan() : offset_valid(false), Shield_count(0), RangInvalidCount(0), offset_angle(0.0), lidar_speed(-1.0), angle(0.0), angleEnd(0.0), distance(), signal(), CurTime(0.0){ }
 
             float getAngle() 	{ return angle; }
 	        float getAngleEnd() { return angleEnd; }
@@ -46,6 +46,7 @@ namespace dtfeverest
             u16                   Noise;                
             std::vector<float>    distance;         // unit: meter
             std::vector<int>      signal;           // range: 0 - 255
+            std::vector<double>   CurTime;
 	    };
 
         
@@ -83,8 +84,8 @@ namespace dtfeverest
                 /*get lidar version*/                
                 static u8 UnpackerLidarVersion(CLidarPacket &packet); 
 
-
-
+                /*get current Time*/
+                static double GetCurrentTime();
 		};
 	}
 }

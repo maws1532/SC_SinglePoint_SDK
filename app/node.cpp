@@ -19,6 +19,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <string.h>
+#include <iostream>
+#include <chrono>
 
 
 #define DEBUG_MAIN
@@ -30,17 +32,25 @@ typedef struct _rslidar_data
     _rslidar_data()
     {
         signal = 0;
-        // angle = 0.0;
         distance = 0.0;
+        curtime = 0.0;
     }
     uint8_t signal;
-    // float   angle;
     float   distance;
+    double curtime;
 }RslidarDataComplete;
 
 using namespace std;
 using namespace dtfeverest::dtfhwdrivers;
-
+double GetCurTime()
+{
+    double time = 0;
+    auto now = std::chrono::system_clock::now();
+    auto duration = now.time_since_epoch();
+    auto milliseconds = std::chrono::duration_cast <std::chrono::milliseconds>(duration);
+    time = milliseconds.count();
+    return time;
+}
 
 int main(int argc, char * argv[])
 {
@@ -105,9 +115,10 @@ int main(int argc, char * argv[])
                     {
                         one_lidar_data.signal = lidar_scan.signal[i];
                         one_lidar_data.distance = lidar_scan.distance[i];
+                        one_lidar_data.curtime = lidar_scan.CurTime[i];
                         send_lidar_scan_data_part[i] = one_lidar_data;
                     }
-                    printf("counr:%3d signal:%d dis:%5.2f\n", lidar_scan_size,  lidar_scan.signal[0],  lidar_scan.distance[0]);
+                    printf("SYtem Current time:%5.2f getUartdatatime:%5.2f count:%3d signal:%d dis:%5.2f\n",GetCurTime(), lidar_scan.CurTime[0], lidar_scan_size,  lidar_scan.signal[0],  lidar_scan.distance[0]);
                     robotics_lidar.m_lidar_scan.clear();
                 }
                 break;

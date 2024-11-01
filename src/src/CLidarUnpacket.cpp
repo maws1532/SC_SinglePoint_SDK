@@ -14,7 +14,8 @@ History:
 
 /********************************* File includes **********************************/
 #include "CLidarUnpacket.h"
-
+#include <iostream>
+#include <chrono>
 /******************************* System libs includes *****************************/
 #include <string.h>
 
@@ -184,6 +185,23 @@ TToothScan CLidarUnpacket::unpacketNewLidarScanNoSingal(CLidarPacket &packet)
 
     return tooth_scan;
 }
+/***********************************************************************************
+Function:     getsystemCurrenttime
+Description:  Lidar unpacket
+Input:        None
+Output:       None
+Return:       None
+Others:       None
+***********************************************************************************/
+double CLidarUnpacket::GetCurrentTime()
+{
+    double time = 0;
+    auto now = std::chrono::system_clock::now();
+    auto duration = now.time_since_epoch();
+    auto milliseconds = std::chrono::duration_cast <std::chrono::milliseconds>(duration);
+    time = milliseconds.count();
+    return time;
+}
 
 /***********************************************************************************
 Function:     unpacketLidarScan2
@@ -210,12 +228,14 @@ TToothScan CLidarUnpacket::unpacketNewLidarScanHasSingal(CLidarPacket &packet)
     distance_number = (length - head_ptr_offset) / 3;
     tooth_scan.distance.resize(distance_number);
     tooth_scan.signal.resize(distance_number);
+    tooth_scan.CurTime.resize(distance_number);
     for(size_t i = 0 ; i < distance_number; i++)
     {
         signal = CLidarPacket::bufToUByte((buffer+ head_ptr_offset) + 3*i);
         distance = CLidarPacket::bufToUByte2((buffer+ head_ptr_offset) + 3*i + 1);
         tooth_scan.distance[i] = float(distance);
         tooth_scan.signal[i] = int(signal);
+        tooth_scan.CurTime[i] = GetCurrentTime();
         if(tooth_scan.distance[i] < 40)//40mm
         {
             tooth_scan.Shield_count++;

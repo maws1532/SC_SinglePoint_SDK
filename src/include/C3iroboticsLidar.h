@@ -40,19 +40,22 @@ namespace dtfeverest
 	        {
                 this->distance.insert(this->distance.end(), scan.distance.begin(), scan.distance.end());
                 this->signal.insert(this->signal.end(), scan.signal.begin(), scan.signal.end());
+                this->CurTime.insert(this->CurTime.end(), scan.CurTime.begin(), scan.CurTime.end());
 	        }
 
 	        void clear()
 	        {
 	            distance.clear();
 	            signal.clear();
+                CurTime.clear();
 	        }
 
             size_t getSize() {return distance.size();}
 
 	        std::vector<float> distance;
 	        std::vector<int>   signal;
-
+            std::vector<double> CurTime;
+            
 	    };
         struct ErrorTimeOut
         {
