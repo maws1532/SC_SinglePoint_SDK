@@ -226,24 +226,22 @@ TToothScan CLidarUnpacket::unpacketNewLidarScanHasSingal(CLidarPacket &packet)
     tooth_scan.ConfidenceDegr = CLidarPacket::bufToUByte(buffer);
     tooth_scan.Noise = CLidarPacket::bufToUByte2(buffer + 1);
     distance_number = (length - head_ptr_offset) / 3;
-    tooth_scan.distance.resize(distance_number);
-    tooth_scan.signal.resize(distance_number);
-    tooth_scan.CurTime.resize(distance_number);
-    for(size_t i = 0 ; i < distance_number; i++)
-    {
-        signal = CLidarPacket::bufToUByte((buffer+ head_ptr_offset) + 3*i);
-        distance = CLidarPacket::bufToUByte2((buffer+ head_ptr_offset) + 3*i + 1);
-        tooth_scan.distance[i] = float(distance);
-        tooth_scan.signal[i] = int(signal);
-        tooth_scan.CurTime[i] = GetCurrentTime();
-        if(tooth_scan.distance[i] < 40)//40mm
+    // tooth_scan.distance.resize(distance_number);
+    // tooth_scan.signal.resize(distance_number);
+    // tooth_scan.CurTime.resize(distance_number);
+    // for(size_t i = 0 ; i < distance_number; i++)
+    // {
+        signal = CLidarPacket::bufToUByte((buffer+ head_ptr_offset));
+        distance = CLidarPacket::bufToUByte2((buffer+ head_ptr_offset) + 1);
+        tooth_scan.Dis = float(distance);
+        tooth_scan.sig = int(signal);
+        tooth_scan.CTime = GetCurrentTime();
+        if(tooth_scan.Dis < 40)//40mm
         {
             tooth_scan.Shield_count++;
             // printf("lidar shield\n");            
         }
-            //printf("Dis:%6.2f\n\r", tooth_scan.distance[i]);
-        //printf("[CLidarUnpacket]sigal %d! distance %5.2f\n", tooth_scan.signal[i], tooth_scan.distance[i]);
-    }
+        // printf("[CLidarUnpacket]sigal %d! distance %5.2f\n", tooth_scan.sig, tooth_scan.Dis);
     return tooth_scan;
 }
 

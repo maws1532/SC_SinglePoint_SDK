@@ -47,9 +47,11 @@ namespace dtfeverest
             std::vector<float>    distance;         // unit: meter
             std::vector<int>      signal;           // range: 0 - 255
             std::vector<double>   CurTime;
-	    };
 
-        
+            float       Dis;
+            int         sig;
+            double      CTime;
+	    };
 
 		class CLidarUnpacket
 		{

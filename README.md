@@ -5,7 +5,11 @@ Version:
 state:
 1、First update
 
-Verdion:
+Version:
 	tag 1.1
 state:
 1、add system timestamp 
+
+version:
+  tag1.2
+1、optimize data structure

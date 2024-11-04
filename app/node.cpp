@@ -104,23 +104,13 @@ int main(int argc, char * argv[])
             case LIDAR_GRAB_ING:
             case LIDAR_GRAB_SUCESS:
             {
-                TLidarScan lidar_scan = robotics_lidar.getLidarScan();
-                size_t lidar_scan_size = lidar_scan.getSize();
-                if(lidar_scan_size > 0)
-                {
-                    std::vector<RslidarDataComplete> send_lidar_scan_data_part;
-                    send_lidar_scan_data_part.resize(lidar_scan_size);
-                    RslidarDataComplete one_lidar_data;
-                    for(size_t i = 0; i < lidar_scan_size; i++)
-                    {
-                        one_lidar_data.signal = lidar_scan.signal[i];
-                        one_lidar_data.distance = lidar_scan.distance[i];
-                        one_lidar_data.curtime = lidar_scan.CurTime[i];
-                        send_lidar_scan_data_part[i] = one_lidar_data;
-                    }
-                    printf("SYtem Current time:%5.2f getUartdatatime:%5.2f count:%3d signal:%d dis:%5.2f\n",GetCurTime(), lidar_scan.CurTime[0], lidar_scan_size,  lidar_scan.signal[0],  lidar_scan.distance[0]);
-                    robotics_lidar.m_lidar_scan.clear();
-                }
+                RslidarDataComplete Lidardata;
+                LidarCurrData data = robotics_lidar.getLidardata();
+                Lidardata.distance = data.dis;
+                Lidardata.signal = data.sig;
+                Lidardata.curtime = data.CTime;
+
+                printf("SYtem Current time:%5.2f getUartdatatime:%5.2f signal:%d dis:%5.2f\n",GetCurTime(), Lidardata.curtime,  Lidardata.signal,  Lidardata.distance);
                 break;
             }
             
@@ -136,7 +126,7 @@ int main(int argc, char * argv[])
                 break;
             }
         }
-        //usleep(50);
+        //usleep(2000);
     }
 
     return 0;

@@ -57,6 +57,12 @@ namespace dtfeverest
             std::vector<double> CurTime;
             
 	    };
+        struct LidarCurrData
+        {
+            float       dis;
+            int         sig;
+            double      CTime;
+        };
         struct ErrorTimeOut
         {
             bool Invalidflag;
@@ -117,6 +123,9 @@ namespace dtfeverest
 
                 /* Get lidar scan */
                 TLidarScan& getLidarScan() { return m_lidar_scan; }
+
+                /*Get lidar struct data*/
+                LidarCurrData getLidardata(){return Current;}
 
                 /* Set data with signal*/
                 void setDataWithSignal(bool data_with_signal) {m_data_with_signal = data_with_signal;}
@@ -281,6 +290,7 @@ namespace dtfeverest
                 char Lidartype[8];
                 std::string Lds_str;
                 TLidarVersion LidarV;
+                LidarCurrData Current;
             private:
                 CDeviceConnection       *m_device_connect;
                 CLidarPacketReceiver    m_receiver;

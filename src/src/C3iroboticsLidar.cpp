@@ -235,19 +235,19 @@ Output:       None
 Return:       None
 Others:       None
 ***********************************************************************************/
-TLidarGrabResult C3iroboticsLidar::analysisToothScan(CLidarPacket &lidar_packet)
-{
-    TToothScan tooth_scan;
-    if(m_data_with_signal)
-    {
-        tooth_scan = CLidarUnpacket::unpacketLidarScan2(lidar_packet);
-    }
-    else
-    {
-        tooth_scan = CLidarUnpacket::unpacketLidarScan(lidar_packet);
-    }
-    return combineScan(tooth_scan);
-}
+// TLidarGrabResult C3iroboticsLidar::analysisToothScan(CLidarPacket &lidar_packet)
+// {
+//     TToothScan tooth_scan;
+//     if(m_data_with_signal)
+//     {
+//         tooth_scan = CLidarUnpacket::unpacketLidarScan2(lidar_packet);
+//     }
+//     else
+//     {
+//         tooth_scan = CLidarUnpacket::unpacketLidarScan(lidar_packet);
+//     }
+//     return combineScan(tooth_scan);
+// }
 
 /***********************************************************************************
 Function:     analysisToothScan
@@ -271,7 +271,7 @@ TLidarGrabResult C3iroboticsLidar::analysisNewToothScan(CLidarPacket &lidar_pack
         {
             Error_timeout.Shieldflag = true;
             m_Shield_count_down.setTime((double)m_params.Shield_time_out);
-            // printf("lidar shield trule\n");
+            //printf("lidar shield trule\n");
         }      
     }
     else
@@ -294,9 +294,9 @@ Others:       None
 ***********************************************************************************/
 TLidarGrabResult C3iroboticsLidar::combineScan(TToothScan &tooth_scan)
 {
-    TLidarScan part_scan_data;
-    toothScan2LidarScan(tooth_scan, part_scan_data);
-    m_lidar_scan.insert(part_scan_data);
+    Current.dis = tooth_scan.Dis;
+    Current.sig = tooth_scan.sig;
+    Current.CTime = tooth_scan.CTime;
     return LIDAR_GRAB_SUCESS;
 }
 
