@@ -40,7 +40,7 @@ Others:       None
 ***********************************************************************************/
 C3iroboticsLidar::C3iroboticsLidar()
 {
-    SDKVersion = "V1.1"; 
+    SDKVersion = "V1.3"; 
     m_device_connect = NULL;
     m_data_with_signal = true;
     m_receive_lidar_speed = false;
@@ -114,7 +114,14 @@ Others:       None
 int C3iroboticsLidar::ScanErrTimeOut(CLidarPacket *packet)
 {
     if(LIDAR_ERROR_TIME_OVER == packet->m_lidar_erro)
+    {
+        if((m_receiver.GetData_ING != m_receiver.GetSNFlag())&&(m_receiver.GetData_ING != m_receiver.GetInfoFlag()))
+        {
+            //printf("(LINE:%d)-<FUNCTOIN:%s> SendContrContinueRang\n",__LINE__,__FUNCTION__);
+            m_receiver.SendContrContinueRang();
+        }
         goto LOG;
+    }
    if(packet->m_error_Data_Wrong)//data wrong
     {
         printf("Lidar Data Wrong\n");
@@ -162,7 +169,7 @@ int C3iroboticsLidar::ScanErrTimeOut(CLidarPacket *packet)
         //Nothing to do
     }
     LOG:
-       return 0;
+        return 0;
 }
 TLidarGrabResult C3iroboticsLidar::SendLidarData()
 {

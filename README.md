@@ -13,3 +13,8 @@ state:
 version:
   tag1.2
 1、optimize data structure
+
+version:
+  tag1.3
+1、optimize ranging anomaly
+2、added the external serial port shutdown port
