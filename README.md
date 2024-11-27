@@ -18,3 +18,8 @@ version:
   tag1.3
 1、optimize ranging anomaly
 2、added the external serial port shutdown port
+
+version:
+  tag1.4
+1、optimize the system acquisition time
+2、shorten error reporting time

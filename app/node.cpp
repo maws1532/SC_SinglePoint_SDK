@@ -42,16 +42,6 @@ typedef struct _rslidar_data
 
 using namespace std;
 using namespace dtfeverest::dtfhwdrivers;
-double GetCurTime()
-{
-    double time = 0;
-    auto now = std::chrono::system_clock::now();
-    auto duration = now.time_since_epoch();
-    auto milliseconds = std::chrono::duration_cast <std::chrono::milliseconds>(duration);
-    time = milliseconds.count();
-    return time;
-}
-
 int main(int argc, char * argv[])
 {
     int count = 0;
@@ -81,14 +71,21 @@ int main(int argc, char * argv[])
     printf("SDK Version:%s \n",SDKV.c_str());
     if(robotics_lidar.GetDeviceInfo())
     {
-        std::string str1 = robotics_lidar.GetLidarversion();
-        printf("Lidar VersionInfo:%s \n", str1.c_str());
         u8 len = strlen(robotics_lidar.GetLidarSNCode());
         char *ch = robotics_lidar.GetLidarSNCode();
         printf("SN:");
         for(int i = 0;i < len;i++)
             printf("%02x", ch[i]);
         printf("\n");
+
+        printf("Lidar VersionInfo:%s \n", robotics_lidar.GetLidarversion().c_str());
+
+        printf("lidar info:%s\n", robotics_lidar.GetLidarType().c_str());
+
+        printf("HardwareVersion:%s\n", robotics_lidar.GetLidarHardwareVersion().c_str());
+
+        printf("SoftwareVersion:%s\n", robotics_lidar.GetLidarSoftwareVersion().c_str());
+
     }
     else
     {
@@ -110,7 +107,7 @@ int main(int argc, char * argv[])
                 Lidardata.signal = data.sig;
                 Lidardata.curtime = data.CTime;
 
-                printf("SYtem Current time:%5.2f getUartdatatime:%5.2f signal:%d dis:%5.2f\n",GetCurTime(), Lidardata.curtime,  Lidardata.signal,  Lidardata.distance);
+                printf("SYtem Current time:%5.2f getUartdatatime:%5.2f signal:%d dis:%5.2f\n",unpacket.GetSystemTimeInSeconds(), Lidardata.curtime,  Lidardata.signal,  Lidardata.distance);
                 break;
             }
             

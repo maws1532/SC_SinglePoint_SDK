@@ -86,8 +86,8 @@ namespace dtfeverest
                 /*get lidar version*/                
                 static u8 UnpackerLidarVersion(CLidarPacket &packet); 
 
-                /*get current Time*/
-                static double GetCurrentTime();
+                /*get system Time in seconds*/
+                static double GetSystemTimeInSeconds();
 		};
 	}
 }

@@ -40,7 +40,7 @@ Others:       None
 ***********************************************************************************/
 C3iroboticsLidar::C3iroboticsLidar()
 {
-    SDKVersion = "V1.3"; 
+    SDKVersion = "V1.4"; 
     m_device_connect = NULL;
     m_data_with_signal = true;
     m_receive_lidar_speed = false;
@@ -62,11 +62,11 @@ C3iroboticsLidar::C3iroboticsLidar()
     speedStableFlag = false;
     countSpeed = 0;
     LidarV = TLidarVersion::LIDAR_NONE;
-    memset(pProInfopBuf, 0, 128);
-    memset(SNCode, 0, 64);
-    memset(SoftwareV, 0, 16);
-    memset(HardwareV, 0, 16);
-    memset(Lidartype, 0, 8);
+    memset(pProInfopBuf, 0, 256);
+    memset(SNCode, 0, 256);
+    memset(SoftwareV, 0, 96);
+    memset(HardwareV, 0, 96);
+    memset(Lidartype, 0, 96);
 }
 
 /***********************************************************************************
@@ -175,13 +175,13 @@ TLidarGrabResult C3iroboticsLidar::SendLidarData()
 {
 
     TLidarGrabResult resule = LIDAR_GRAB_ING;
-    if(m_receiver.GetData_ING == m_receiver.GetSNFlag())
-    {
-        m_receiver.SendContrSNData();
-    }
-    else if(m_receiver.GetData_ING == m_receiver.GetInfoFlag())
+    if(m_receiver.GetData_ING == m_receiver.GetInfoFlag())
     {
          m_receiver.SendContrInfoData();
+    }
+    else if(m_receiver.GetData_ING == m_receiver.GetSNFlag())
+    {
+        m_receiver.SendContrSNData();
     }
     return resule;
 }
@@ -441,6 +441,7 @@ TLidarGrabResult C3iroboticsLidar::analysisLidarSN(CLidarPacket &lidar_packet)
         return LIDAR_GRAB_ING;
     if(NULL != pTemp)
         strncpy(SNCode, pTemp, length);
+    SNCode[length] = '\0';
     return LIDAR_GRAB_ING;
 }
 TLidarGrabResult C3iroboticsLidar::analysisLidarInfo(CLidarPacket &lidar_packet)
@@ -451,6 +452,8 @@ TLidarGrabResult C3iroboticsLidar::analysisLidarInfo(CLidarPacket &lidar_packet)
         return LIDAR_GRAB_ING;
     if((NULL != pTemp)&&(length > 0))
         strncpy(pProInfopBuf, pTemp, length);
+
+        pProInfopBuf[length] = '\0';
     return LIDAR_GRAB_ING;
 }
 
@@ -745,10 +748,10 @@ Output:       None
 Return:       None
 Others:       None
 ***********************************************************************************/
-std::string C3iroboticsLidar::GetLidarFirmwareVersion()
+std::string C3iroboticsLidar::GetLidarSoftwareVersion()
 {
-    strncpy(SoftwareV, &pProInfopBuf[32], 11);
-    SoftwareV[11] = '\0';
+    strncpy(SoftwareV, &pProInfopBuf[41], 24);
+    SoftwareV[24] = '\0';
 
     std::string string = SoftwareV;
     return string;
@@ -763,8 +766,8 @@ Others:       None
 ***********************************************************************************/
 std::string C3iroboticsLidar::GetLidarHardwareVersion()
 {
-    strncpy(HardwareV, &pProInfopBuf[44], 11);
-    HardwareV[11] = '\0';
+    strncpy(HardwareV, &pProInfopBuf[25], 15);
+    HardwareV[15] = '\0';
 
     std::string string = HardwareV;
     return string;
@@ -780,8 +783,8 @@ Others:       None
 std::string C3iroboticsLidar::GetLidarType()
 {
 
-    strncpy(Lidartype, &pProInfopBuf[25], 6);
-    Lidartype[6] = '\0';
+    strncpy(Lidartype, &pProInfopBuf[0], 24);
+    Lidartype[24] = '\0';
     
     std::string string = Lidartype;
     return string;

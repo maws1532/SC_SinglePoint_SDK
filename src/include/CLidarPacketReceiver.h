@@ -117,10 +117,10 @@ namespace dtfeverest
                     /* Constructor */
                     TParams()
                     {
-                        packet_max_time_ms = 3500;
+                        packet_max_time_ms = 1000;//3500;
                         packet_wait_time_ms = 100;
-                        CRC_max_time_ms = 3500;
-                        Data_Wrong_time_out = 3500;
+                        CRC_max_time_ms = 1000;//3500;
+                        Data_Wrong_time_out = 1000;//3500;
                     }
 
                     size_t packet_max_time_ms;

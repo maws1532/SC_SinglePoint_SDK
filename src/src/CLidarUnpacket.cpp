@@ -193,16 +193,15 @@ Output:       None
 Return:       None
 Others:       None
 ***********************************************************************************/
-double CLidarUnpacket::GetCurrentTime()
+double CLidarUnpacket::GetSystemTimeInSeconds()
 {
-    double time = 0;
-    auto now = std::chrono::system_clock::now();
-    auto duration = now.time_since_epoch();
-    auto milliseconds = std::chrono::duration_cast <std::chrono::milliseconds>(duration);
-    time = milliseconds.count();
-    return time;
+    struct timespec tp;
+    if(0 == clock_gettime(CLOCK_MONOTONIC, &tp))
+    {
+        return (double)(tp.tv_sec + tp.tv_nsec/1e9);
+    }
+    return -1;
 }
-
 /***********************************************************************************
 Function:     unpacketLidarScan2
 Description:  Lidar unpacket
@@ -235,7 +234,7 @@ TToothScan CLidarUnpacket::unpacketNewLidarScanHasSingal(CLidarPacket &packet)
         distance = CLidarPacket::bufToUByte2((buffer+ head_ptr_offset) + 1);
         tooth_scan.Dis = float(distance);
         tooth_scan.sig = int(signal);
-        tooth_scan.CTime = GetCurrentTime();
+        tooth_scan.CTime = GetSystemTimeInSeconds();
         if(tooth_scan.Dis < 40)//40mm
         {
             tooth_scan.Shield_count++;

@@ -184,8 +184,8 @@ namespace dtfeverest
                 /*Get Lidar SN code*/
                 char *GetLidarSNCode();
 
-                /*get lidar Firm version*/
-                std::string GetLidarFirmwareVersion();
+                /*get lidar sofware version*/
+                std::string GetLidarSoftwareVersion();
 
                 /*Get Lidar Hardware Version*/
                 std::string GetLidarHardwareVersion();
@@ -283,11 +283,11 @@ namespace dtfeverest
             public:
                 TLidarScan              m_lidar_scan;
                 ErrorTimeOut            Error_timeout;
-                char pProInfopBuf[128];
-                char SNCode[64];
-                char SoftwareV[16];
-                char HardwareV[16];
-                char Lidartype[8];
+                char pProInfopBuf[256];
+                char SNCode[256];
+                char SoftwareV[96];
+                char HardwareV[96];
+                char Lidartype[96];
                 std::string Lds_str;
                 TLidarVersion LidarV;
                 LidarCurrData Current;
