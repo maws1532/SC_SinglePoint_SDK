@@ -159,10 +159,10 @@ int C3iroboticsLidar::ScanErrTimeOut(CLidarPacket *packet)
         if(m_Shield_count_down.isEnd())
         {
             printf("(LINE:%d)-<FUNCTION:%s> Lidar shield\n",__LINE__,__FUNCTION__);
-            packet->m_lidar_erro = LIDAR_ERROR_SHIELD;
             Error_timeout.Shieldflag = false;
-            return -1;
         }
+        packet->m_lidar_erro = LIDAR_ERROR_SHIELD;
+        return -1;
     }
     else
     {
@@ -452,8 +452,7 @@ TLidarGrabResult C3iroboticsLidar::analysisLidarInfo(CLidarPacket &lidar_packet)
         return LIDAR_GRAB_ING;
     if((NULL != pTemp)&&(length > 0))
         strncpy(pProInfopBuf, pTemp, length);
-
-        pProInfopBuf[length] = '\0';
+    pProInfopBuf[length] = '\0';
     return LIDAR_GRAB_ING;
 }
 
@@ -750,8 +749,8 @@ Others:       None
 ***********************************************************************************/
 std::string C3iroboticsLidar::GetLidarSoftwareVersion()
 {
-    strncpy(SoftwareV, &pProInfopBuf[41], 24);
-    SoftwareV[24] = '\0';
+    strncpy(SoftwareV, &pProInfopBuf[7], 11);
+    SoftwareV[11] = '\0';
 
     std::string string = SoftwareV;
     return string;
@@ -766,8 +765,8 @@ Others:       None
 ***********************************************************************************/
 std::string C3iroboticsLidar::GetLidarHardwareVersion()
 {
-    strncpy(HardwareV, &pProInfopBuf[25], 15);
-    HardwareV[15] = '\0';
+    strncpy(HardwareV, &pProInfopBuf[19], 11);
+    HardwareV[11] = '\0';
 
     std::string string = HardwareV;
     return string;
@@ -783,8 +782,8 @@ Others:       None
 std::string C3iroboticsLidar::GetLidarType()
 {
 
-    strncpy(Lidartype, &pProInfopBuf[0], 24);
-    Lidartype[24] = '\0';
+    strncpy(Lidartype, &pProInfopBuf[1], 5);
+    Lidartype[5] = '\0';
     
     std::string string = Lidartype;
     return string;

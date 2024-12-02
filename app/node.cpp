@@ -63,7 +63,6 @@ int main(int argc, char * argv[])
         printf("[AuxCtrl] Open serail port %s failed! \n", opt_com_path.c_str());
         return -1;
     }
-
     printf("C3iroboticslidar connected\n");
     robotics_lidar.initilize(&serial_connect);
     

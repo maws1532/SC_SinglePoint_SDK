@@ -23,3 +23,8 @@ version:
   tag1.4
 1、optimize the system acquisition time
 2、shorten error reporting time
+
+version:
+  tag1.5
+1、shroten occlusion error reporting time
+2、optimize error reporting logic

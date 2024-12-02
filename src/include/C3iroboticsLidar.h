@@ -267,7 +267,7 @@ namespace dtfeverest
                         tooth_number = 16;
                         scan_time_out_ms = 150;
                         speed_time_out = 3500;
-                        Shield_time_out = 20000;
+                        Shield_time_out = 3500;
                         Invalid_time_out = 3500;
                         GetData_time_out = 5000;
                     }
