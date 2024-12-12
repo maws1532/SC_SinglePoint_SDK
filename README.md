@@ -28,3 +28,7 @@ version:
   tag1.5
 1、shroten occlusion error reporting time
 2、optimize error reporting logic
+
+version:
+  tag1.6
+1、optimize The Way of SN Acquisition

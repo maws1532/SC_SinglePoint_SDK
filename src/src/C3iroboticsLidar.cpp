@@ -40,7 +40,7 @@ Others:       None
 ***********************************************************************************/
 C3iroboticsLidar::C3iroboticsLidar()
 {
-    SDKVersion = "V1.4"; 
+    SDKVersion = "V1.6"; 
     m_device_connect = NULL;
     m_data_with_signal = true;
     m_receive_lidar_speed = false;
@@ -62,6 +62,7 @@ C3iroboticsLidar::C3iroboticsLidar()
     speedStableFlag = false;
     countSpeed = 0;
     LidarV = TLidarVersion::LIDAR_NONE;
+    SNCodelen = 0;
     memset(pProInfopBuf, 0, 256);
     memset(SNCode, 0, 256);
     memset(SoftwareV, 0, 96);
@@ -436,12 +437,14 @@ Others:       None
 TLidarGrabResult C3iroboticsLidar::analysisLidarSN(CLidarPacket &lidar_packet)
 {
     u16 length = lidar_packet.getParamLength();
-    char *pTemp = (char*)CLidarUnpacket::unpacketLidarInformation(lidar_packet);
+    u8 *pTemp = CLidarUnpacket::unpacketLidarInformation(lidar_packet);
     if(NULL == pTemp)
         return LIDAR_GRAB_ING;
-    if(NULL != pTemp)
-        strncpy(SNCode, pTemp, length);
-    SNCode[length] = '\0';
+    for(int i = 0;i < length;i++)
+    {
+        SNCode[i] = pTemp[i];
+    }
+    SNCodelen = length;
     return LIDAR_GRAB_ING;
 }
 TLidarGrabResult C3iroboticsLidar::analysisLidarInfo(CLidarPacket &lidar_packet)
@@ -709,9 +712,21 @@ Output:       None
 Return:       None
 Others:       None
 ***********************************************************************************/
-char * C3iroboticsLidar::GetLidarSNCode()
+u8 *C3iroboticsLidar::GetLidarSNCode()
 {
     return SNCode;
+}
+/***********************************************************************************
+Function:     GetSNCodelen
+Description:  get lidar SN code length
+Input:        None
+Output:       None
+Return:       None
+Others:       None
+***********************************************************************************/
+u8 C3iroboticsLidar::GetSNCodelen()
+{
+    return SNCodelen;
 }
 /***********************************************************************************
 Function:     SetLidarversion
@@ -809,7 +824,7 @@ bool C3iroboticsLidar::GetDeviceInfo()
         SendLidarData();
         getScanData();
 
-        if((strlen(SNCode) > 0)&&(m_receiver.GetData_ING == m_receiver.GetSNFlag()))
+        if((SNCodelen > 0)&&(m_receiver.GetData_ING == m_receiver.GetSNFlag()))
         {
             printf("get SN succuss\n");
             m_receiver.SetSNFlag(m_receiver.GetData_SUCCESS);

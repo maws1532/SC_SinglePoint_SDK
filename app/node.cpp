@@ -70,8 +70,11 @@ int main(int argc, char * argv[])
     printf("SDK Version:%s \n",SDKV.c_str());
     if(robotics_lidar.GetDeviceInfo())
     {
-        u8 len = strlen(robotics_lidar.GetLidarSNCode());
-        char *ch = robotics_lidar.GetLidarSNCode();
+        u8 len = robotics_lidar.GetSNCodelen();
+        u8 *ch = robotics_lidar.GetLidarSNCode();
+        printf("current Systemtime:%5.2f\n",unpacket.GetSystemTimeInSeconds());
+
+        printf("length:%d\n", len);
         printf("SN:");
         for(int i = 0;i < len;i++)
             printf("%02x", ch[i]);
