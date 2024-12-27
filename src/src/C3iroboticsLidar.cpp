@@ -40,7 +40,7 @@ Others:       None
 ***********************************************************************************/
 C3iroboticsLidar::C3iroboticsLidar()
 {
-    SDKVersion = "V1.6"; 
+    SDKVersion = "V1.7"; 
     m_device_connect = NULL;
     m_data_with_signal = true;
     m_receive_lidar_speed = false;
@@ -304,7 +304,9 @@ TLidarGrabResult C3iroboticsLidar::combineScan(TToothScan &tooth_scan)
 {
     Current.dis = tooth_scan.Dis;
     Current.sig = tooth_scan.sig;
+    Current.ConfidenceDegr = tooth_scan.ConfidenceDegr;
     Current.CTime = tooth_scan.CTime;
+    
     return LIDAR_GRAB_SUCESS;
 }
 

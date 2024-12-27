@@ -35,6 +35,7 @@ typedef struct _rslidar_data
         distance = 0.0;
         curtime = 0.0;
     }
+    uint8_t ConfidenceDegr;
     uint8_t signal;
     float   distance;
     double curtime;
@@ -107,9 +108,10 @@ int main(int argc, char * argv[])
                 LidarCurrData data = robotics_lidar.getLidardata();
                 Lidardata.distance = data.dis;
                 Lidardata.signal = data.sig;
+                Lidardata.ConfidenceDegr = data.ConfidenceDegr;
                 Lidardata.curtime = data.CTime;
 
-                printf("SYtem Current time:%5.2f getUartdatatime:%5.2f signal:%d dis:%5.2f\n",unpacket.GetSystemTimeInSeconds(), Lidardata.curtime,  Lidardata.signal,  Lidardata.distance);
+                printf("SYtem Current time:%5.2f getUartdatatime:%5.2f signal:%d dis:%5.2f, ConfidenceDegr:%d \n",unpacket.GetSystemTimeInSeconds(), Lidardata.curtime,  Lidardata.signal,  Lidardata.distance, Lidardata.ConfidenceDegr);
                 break;
             }
             

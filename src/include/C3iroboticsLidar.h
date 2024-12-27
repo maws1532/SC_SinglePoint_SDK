@@ -59,6 +59,7 @@ namespace dtfeverest
 	    };
         struct LidarCurrData
         {
+            u8          ConfidenceDegr;
             float       dis;
             int         sig;
             double      CTime;

@@ -32,3 +32,8 @@ version:
 version:
   tag1.6
 1、optimize The Way of SN Acquisition
+
+version:
+  tag1.7
+1、Append the confidence field to the data structure
+2、optinize the false alarm logic of air distance measurement

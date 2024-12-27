@@ -235,11 +235,19 @@ TToothScan CLidarUnpacket::unpacketNewLidarScanHasSingal(CLidarPacket &packet)
         tooth_scan.Dis = float(distance);
         tooth_scan.sig = int(signal);
         tooth_scan.CTime = GetSystemTimeInSeconds();
-        if(tooth_scan.Dis < 40)//40mm
+        if(tooth_scan.ConfidenceDegr > 30)
         {
-            tooth_scan.Shield_count++;
-            // printf("lidar shield\n");            
+            if(tooth_scan.Dis < 40)//40mm
+            {
+                tooth_scan.Shield_count++;
+                // printf("lidar shield\n");            
+            }
         }
+        else
+        {
+            tooth_scan.Dis = 0.0;
+        }
+        
         // printf("[CLidarUnpacket]sigal %d! distance %5.2f\n", tooth_scan.sig, tooth_scan.Dis);
     return tooth_scan;
 }
