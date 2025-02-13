@@ -183,7 +183,7 @@ namespace dtfeverest
                 u8 GetDeviceNodeID();
 
                 /*Get Lidar SN code*/
-                u8 *GetLidarSNCode();
+                std::string GetLidarSNCode();
 
                 /*Get Lidar SN code length*/
                 u8 GetSNCodelen();

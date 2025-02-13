@@ -72,14 +72,12 @@ int main(int argc, char * argv[])
     if(robotics_lidar.GetDeviceInfo())
     {
         u8 len = robotics_lidar.GetSNCodelen();
-        u8 *ch = robotics_lidar.GetLidarSNCode();
+        string Sn = robotics_lidar.GetLidarSNCode();
         printf("current Systemtime:%5.2f\n",unpacket.GetSystemTimeInSeconds());
 
         printf("length:%d\n", len);
-        printf("SN:");
-        for(int i = 0;i < len;i++)
-            printf("%02x", ch[i]);
-        printf("\n");
+        cout << "Sn:"<< Sn << endl;
+
 
         printf("Lidar VersionInfo:%s \n", robotics_lidar.GetLidarversion().c_str());
 

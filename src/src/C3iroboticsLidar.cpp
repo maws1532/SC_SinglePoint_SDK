@@ -40,7 +40,7 @@ Others:       None
 ***********************************************************************************/
 C3iroboticsLidar::C3iroboticsLidar()
 {
-    SDKVersion = "V1.7"; 
+    SDKVersion = "V1.8"; 
     m_device_connect = NULL;
     m_data_with_signal = true;
     m_receive_lidar_speed = false;
@@ -714,9 +714,15 @@ Output:       None
 Return:       None
 Others:       None
 ***********************************************************************************/
-u8 *C3iroboticsLidar::GetLidarSNCode()
+std::string C3iroboticsLidar::GetLidarSNCode()
 {
-    return SNCode;
+    std::string SN;
+    SN.resize(SNCodelen * 2);
+    for(int i = 0;i < SNCodelen;i++)
+    {
+        snprintf(&SN[i * 2], 3, "%02x", SNCode[i]);
+    }
+    return SN;
 }
 /***********************************************************************************
 Function:     GetSNCodelen

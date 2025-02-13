@@ -37,3 +37,6 @@ version:
   tag1.7
 1、Append the confidence field to the data structure
 2、optinize the false alarm logic of air distance measurement
+version:
+  tag1.8
+  1、optimize "GetLidarSNCode" function.
